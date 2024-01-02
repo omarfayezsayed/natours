@@ -8,11 +8,7 @@ const User = require("../../models/userModel").User;
 // dotenv.config({ path: "./config.env" });
 mongoose.set("strictQuery", false);
 
-mongoose
-  .connect(
-    "mongodb+srv://omar:1234@nodetutorial.r9ns2ip.mongodb.net/Natours?retryWrites=true&w=majority"
-  )
-  .then(() => console.log("DB connection successful!"));
+mongoose.connect().then(() => console.log("DB connection successful!"));
 // READ JSON FILE
 const tours = JSON.parse(fs.readFileSync(`${__dirname}/tours.json`, "utf-8"));
 const users = JSON.parse(fs.readFileSync(`${__dirname}/users.json`, "utf-8"));
