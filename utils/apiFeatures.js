@@ -10,7 +10,6 @@ class apiFeatures {
     excludedFields.forEach((field) => {
       delete queryObj[field];
     });
-    // 2) Advanced filtering
     let queryString = JSON.stringify(queryObj);
     queryString = queryString.replace(/\b(lt|lte|gt|gte)\b/g, (match) => {
       return `$${match}`;
@@ -29,7 +28,8 @@ class apiFeatures {
   fieldsLimiting() {
     if (this.queryRequest.fields) {
       const filedsString = this.queryRequest.fields.split(",").join(" ");
-      this.query = this.query.select(filedsString);
+      console.log(filedsString);
+      this.query = this.query.select(`${filedsString}`);
     } else {
       this.query = this.query.select("-__v");
     }

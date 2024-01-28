@@ -111,13 +111,13 @@ tourSchema.pre("save", function (next) {
   next();
 });
 tourSchema.pre(/^find/, function (next) {
-  // const regex = /^find\w+/;
   this.populate({
     path: "guides",
     select: "-__v ",
   }).populate({
     path: "reviews",
   });
+
   next();
 });
 tourSchema.virtual("reviews", {

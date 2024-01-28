@@ -44,5 +44,5 @@ block content
                             span.card__footer-text= `rating (${tour.ratingsQuantity})`
                     .card__button        
                         a.btn.btn--green.btn--small(href=`/tour/${tour.slug}`) Details
-                        if admin 
+                        if user && user.role==="admin"  
                             a.btn.btn--red.btn--small.deleteTour(tourId=`${tour._id}`) Delete 

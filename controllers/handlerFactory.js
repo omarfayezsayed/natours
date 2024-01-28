@@ -1,6 +1,6 @@
 const { Model } = require("mongoose");
 const { asyncWrapper } = require("../utils/asyncWrapper");
-const AppError = require("../utils/errorClass").AppError;
+const { AppError } = require("../utils/errorClass");
 exports.deleteOne = (Model) => {
   return asyncWrapper(async (req, res, next) => {
     const doc = await Model.findByIdAndDelete(req.params.id);

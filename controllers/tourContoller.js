@@ -4,14 +4,12 @@ const { asyncWrapper } = require("../utils/asyncWrapper");
 const { AppError } = require("../utils/errorClass");
 const factory = require("../controllers/handlerFactory");
 const getAllTours = asyncWrapper(async (req, res, next) => {
-  // console.log(req.headers);
-  console.log("inside all controller");
   const features = new apiFeatures(Tour.find(), req.query);
+  console.log(req.query);
   features.filter();
   features.sort();
   features.fieldsLimiting();
   features.pagination();
-  features;
   // console.log(tours);
   const tours = await features.query;
   console.log("asdnjagdgsfd");

@@ -1,4 +1,4 @@
-const app = require("./main").app;
+const { app } = require("./main");
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
 const port = process.env.PORT;

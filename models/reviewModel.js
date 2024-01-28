@@ -107,6 +107,6 @@ reviewSchema.post("save", async function () {
 // findByIdAndUpdate
 // findByIdAndDelete
 
-const reviewModel = mongoose.model("Review", reviewSchema);
+const Review = mongoose.model("Review", reviewSchema);
 
-module.exports = { reviewModel };
+module.exports = { Review };

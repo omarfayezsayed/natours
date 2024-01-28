@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-const Review = require("../models/reviewModel").reviewModel;
-const asyncWrapper = require("../utils/asyncWrapper").asyncWrapper;
+const { Review } = require("../models/reviewModel");
+const { asyncWrapper } = require("../utils/asyncWrapper");
 const factory = require("../controllers/handlerFactory");
 const getAllReviews = asyncWrapper(async (req, res, next) => {
   let filter = {};

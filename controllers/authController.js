@@ -17,7 +17,7 @@ const createSendToken = (user, statusCode, res) => {
   };
   if (process.env.ENV_ENVIRONMENT === "production") cookieOptions.secure = true;
   user.password = undefined;
-  res.cookie("jwt", token, cookieOptions); //set cookie to be sent to the clint in the response
+  res.cookie("jwt", token, cookieOptions); // set cookie to be sent to the clint in the response
   res.status(statusCode).json({
     status: "success",
     token,
@@ -75,9 +75,6 @@ const isLoggedIn = asyncWrapper(async (req, res, next) => {
       // this will be auto passed to pug templates
       res.locals.user = currnetUser;
       res.locals.admin = true;
-
-      // res.locals.admin = false;
-      console.log(res.locals);
       if (currnetUser.role === "admin") res.locals.admin = true;
       return next();
     } catch (err) {
@@ -125,7 +122,7 @@ const routeProtect = asyncWrapper(async (req, res, next) => {
     return next(new AppError("the password changed ,please log in agine", 401));
   }
   req.user = currnetUser;
-
+  res.locals.user = currnetUser;
   next();
 });
 
