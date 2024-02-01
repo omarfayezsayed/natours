@@ -38,9 +38,12 @@ if (deleteTourBtn) {
 if (saveSettingsBtn) {
   saveSettingsBtn.addEventListener("click", (e) => {
     e.preventDefault();
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-    updateSettings({ name, email }, "normalData");
+    const data = new FormData();
+    data.append("name", document.getElementById("name").value);
+    data.append("email", document.getElementById("email").value);
+    data.append("photo", document.getElementById("photo").files[0]);
+    console.log(data);
+    updateSettings(data, "normalData");
   });
 }
 

@@ -25,6 +25,7 @@ router.patch("/resetPassword/:token", authController.resetPassword);
 router.patch("/updateMe", [
   authController.routeProtect,
   usercontroller.uploadUserPhoto,
+  usercontroller.ProcessUserImage,
   usercontroller.updateMe,
 ]);
 

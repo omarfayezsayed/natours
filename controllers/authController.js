@@ -9,7 +9,7 @@ const { verify } = require("crypto");
 const nodemailer = require("nodemailer");
 const { sendEmail } = require("../utils/sendEmail");
 const crypto = require("crypto");
-
+const { Email } = require("../utils/email");
 const createSendToken = (user, statusCode, res) => {
   const token = assignToken(user._id);
   const cookieOptions = {
@@ -32,6 +32,7 @@ const assignToken = (id) => {
 };
 const signUp = asyncWrapper(async (req, res, next) => {
   const user = await User.create(req.body);
+  await new Email(user, "localhost:3000/me").sendWelcome();
   createSendToken(user, 201, res);
 });
 
@@ -160,21 +161,15 @@ const forgotPassword = asyncWrapper(async (req, res, next) => {
   const resetToken = user.generateResetToken();
 
   await user.save({ validateBeforeSave: false });
-
-  const resetUrl = `${req.protocol}://${req.get(
-    "host"
-  )}/api/v1/resetPassword/${resetToken}`;
-
-  const message = `You forgot you password please submit a post request with that token:${resetToken} to update your password to that url:${resetUrl}`;
   try {
-    console.log("ya rab");
-    await sendEmail({
-      to: user.email,
-      from: "fayez <hello@gmail.com>",
-      subject: "Reset Password",
-      message,
-    });
+    const resetUrl = `${req.protocol}://${req.get(
+      "host"
+    )}/api/v1/resetPassword/${resetToken}`;
+
+    // const message = `You forgot you password please submit a post request with that token:${resetToken} to update your password to that url:${resetUrl}`;
+    await new Email(user, resetUrl).sendResetPassword();
   } catch (err) {
+    console.log(err);
     user.passwordResetToken = undefined;
     user.passwordResetExpires = undefined;
     await user.save({ validateBeforeSave: false });

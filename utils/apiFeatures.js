@@ -29,7 +29,7 @@ class apiFeatures {
     if (this.queryRequest.fields) {
       const filedsString = this.queryRequest.fields.split(",").join(" ");
       console.log(filedsString);
-      this.query = this.query.select(`${filedsString}`);
+      this.query = this.query.select(filedsString);
     } else {
       this.query = this.query.select("-__v");
     }

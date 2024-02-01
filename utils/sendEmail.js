@@ -2,7 +2,7 @@ const { model } = require("mongoose");
 const nodemailer = require("nodemailer");
 
 const sendEmail = async (options) => {
-  const transporter = await nodemailer.createTransport({
+  const transporter = nodemailer.createTransport({
     host: "sandbox.smtp.mailtrap.io",
     port: 587,
     auth: {

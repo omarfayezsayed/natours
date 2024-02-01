@@ -10,7 +10,12 @@ router.get("/tours-stat", controller.getToursStatistics);
 router.get("/", controller.getAllTours);
 router.post("/", controller.addTour);
 router.get("/:id", controller.getTour);
-router.patch("/:id", controller.updateTour);
+router.patch(
+  "/:id",
+  controller.uploadTourImages,
+  controller.processTourImages,
+  controller.updateTour
+);
 
 router.delete("/:id", [
   authController.routeProtect,
@@ -18,9 +23,9 @@ router.delete("/:id", [
   controller.deleteTour,
 ]);
 // router.post("/:tourId/reviews", [
-//   authController.routeProtect,
-//   reviewController.checkReviewData,
-//   reviewController.addReview,
+// authController.routeProtect,
+// reviewController.checkReviewData,
+// reviewController.addReview,
 // ]);
 
 // post tours/:tourId/reviews
