@@ -1,7 +1,7 @@
 const { Tour } = require("../models/tourModel");
 const { asyncWrapper } = require("../utils/asyncWrapper");
 const { AppError } = require("../utils/errorClass");
-
+const { Booking } = require("../models/bookingmodel");
 const getOverviewPage = asyncWrapper(async (req, res, next) => {
   const tours = await Tour.find();
   res.status(200).render("overview", {
@@ -30,9 +30,21 @@ const getAccount = (req, res, next) => {
     title: "abc",
   });
 };
+const getMyTours = asyncWrapper(async (req, res, next) => {
+  const bookedTours = await Booking.find({ user: req.user._id });
+  const tours = [];
+  bookedTours.forEach((el) => {
+    tours.push(el.tour);
+  });
+  console.log(tours);
+  res.render("overview", {
+    tours,
+  });
+});
 module.exports = {
   getOverviewPage,
   getTourPage,
   getLoginPage,
   getAccount,
+  getMyTours,
 };

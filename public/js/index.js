@@ -2,6 +2,7 @@ import { login } from "./login.js";
 import { logout } from "./logout.js";
 import { deletTour } from "./deleteTour.js";
 import { updateSettings } from "./updateSettings.js";
+import { getCheckout } from "./getCheckout.js";
 // Dom elements
 
 const loginFrom = document.querySelector(".login-form");
@@ -9,6 +10,7 @@ const logoutBtn = document.querySelector(".nav__el--logout");
 const deleteTourBtn = document.querySelectorAll(".deleteTour");
 const saveSettingsBtn = document.querySelector(".save-settings");
 const savePasswordBtn = document.querySelector(".btn--save-password");
+const BooKTourBtn = document.getElementById("book-tour");
 if (loginFrom) {
   loginFrom.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -60,5 +62,13 @@ if (savePasswordBtn) {
       "password"
     );
     document.querySelector(".btn--save-password").textContent = "save password";
+  });
+}
+
+if (BooKTourBtn) {
+  BooKTourBtn.addEventListener("click", async (el) => {
+    const tourId = el.target.dataset.tourId;
+    console.log(tourId);
+    await getCheckout(tourId);
   });
 }

@@ -1,6 +1,7 @@
-const { Model } = require("mongoose");
+// const { Model } = require("mongoose");
 const { asyncWrapper } = require("../utils/asyncWrapper");
 const { AppError } = require("../utils/errorClass");
+const { apiFeatures } = require("../utils/apiFeatures");
 exports.deleteOne = (Model) => {
   return asyncWrapper(async (req, res, next) => {
     const doc = await Model.findByIdAndDelete(req.params.id);
@@ -63,3 +64,24 @@ exports.getOne = (Model, populateOptions) => {
     });
   });
 };
+
+exports.getAll = (Model) =>
+  asyncWrapper(async (req, res, next) => {
+    // To allow for nested GET reviews on tour (hack)
+    let filter = {};
+    if (req.params.tourId) filter = { tour: req.params.tourId };
+    console.log(Model, req.query);
+    const features = new apiFeatures(Model.find(), req.query, Model);
+    features.filter();
+    features.sort();
+    features.fieldsLimiting();
+    features.pagination();
+    const doc = await features.query;
+
+    // SEND RESPONSE
+    res.status(200).json({
+      status: "success",
+      results: doc.length,
+      data: doc,
+    });
+  });

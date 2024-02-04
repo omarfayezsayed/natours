@@ -42,14 +42,19 @@ const TourRouter = require("./routes/tourRoutes").router;
 const userRouter = require("./routes/userRoutes").router;
 const reviewRouter = require("./routes/reviewRoutes").router;
 const viewRouter = require("./routes/viewRoutes").router;
+const bookingRouter = require("./routes/bookingRoutes").router;
+
 const { routeNotFound } = require("./utils/routeNotFound");
 const { globalErrorHandling } = require("./controllers/errorController");
 
 // Routes
 app.use("/", viewRouter);
+
 app.use("/api/v1/tours", TourRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/reviews", reviewRouter);
+app.use("/api/v1/bookings", bookingRouter);
+
 app.use("*", routeNotFound);
 
 app.use(globalErrorHandling);

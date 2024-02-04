@@ -1,8 +1,9 @@
 const { Tour } = require("../models/tourModel");
 class apiFeatures {
-  constructor(query, queryString) {
+  constructor(query, queryString, model) {
     this.query = query;
     this.queryRequest = queryString;
+    this.model = model;
   }
   filter() {
     const queryObj = { ...this.queryRequest };
@@ -14,8 +15,8 @@ class apiFeatures {
     queryString = queryString.replace(/\b(lt|lte|gt|gte)\b/g, (match) => {
       return `$${match}`;
     });
-    console.log(queryString);
-    this.query = Tour.find(JSON.parse(queryString));
+    console.log("json", queryString);
+    this.query = this.model.find(JSON.parse(queryString));
   }
   sort() {
     if (this.queryRequest.sort) {
