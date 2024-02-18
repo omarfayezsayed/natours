@@ -10,9 +10,10 @@ router.get(
   authController.routeProtect,
   bookingController.getCheckoutSession
 );
-router.get("/bookingId", bookingController.getBooking);
-router.delete("/bookingId", bookingController.deleteBooking);
+router.get("/:id", bookingController.getBooking);
+router.delete("/:id", bookingController.deleteBooking);
 router.post("/createBookingCheckout", bookingController.createBookingCheckout);
+router.patch("/:id", bookingController.updateBooking);
 
 module.exports = {
   router,

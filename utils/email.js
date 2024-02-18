@@ -1,22 +1,31 @@
 const pug = require("pug");
 const nodemailer = require("nodemailer");
-// const htmlToText = require("html-to-text");
+const mailgunTransport = require("nodemailer-mailgun-transport");
 class Email {
   constructor(user, url) {
     this.to = user.email;
-    this.from = "natours@gmail.com";
+    this.from = "omarfayez129@gmail.com";
     this.url = url;
     this.firstName = user.name.split(" ")[0];
   }
 
   createTransport() {
-    if (process.env.ENV_ENVIRONMENT == "production") return 1;
+    if (process.env.ENV_ENVIRONMENT == "production") {
+      const mailgunOptions = {
+        auth: {
+          api_key: process.env.MAIL_GUN_API_KEY,
+          domain: process.env.MAIL_GUN_DOMAIN,
+        },
+      };
+      const transport = mailgunTransport(mailgunOptions);
+      return nodemailer.createTransport(transport);
+    }
     return nodemailer.createTransport({
       host: "sandbox.smtp.mailtrap.io",
       port: 587,
       auth: {
-        user: "e30d16725b3819",
-        pass: "e3e2fc773e6a09",
+        user: process.env.MAIL_TRAP_USER,
+        pass: process.env.MAIL_TRAP_PASSWORD,
       },
     });
   }
@@ -32,7 +41,7 @@ class Email {
       subject,
       html,
     };
-
+    console.log("to", this.to);
     await this.createTransport().sendMail(transportOptions);
   }
   async sendWelcome() {

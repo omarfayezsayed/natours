@@ -34,8 +34,8 @@ router.delete("/deleteMe", [
   usercontroller.deleteMe,
 ]);
 router.delete("/:id", [
-  authController.routeProtect,
-  authController.restrictTo("admin"),
+  // authController.routeProtect,
+  // authController.restrictTo("admin"),
   usercontroller.deleteUser,
 ]);
 router.patch("/:id", usercontroller.updateUser);

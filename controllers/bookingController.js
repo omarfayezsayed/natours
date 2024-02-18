@@ -59,10 +59,12 @@ const createBookingCheckout = asyncWrapper(async (req, res, next) => {
 const getAllBookings = factory.getAll(Booking);
 const getBooking = factory.getOne(Booking);
 const deleteBooking = factory.deleteOne(Booking);
+const updateBooking = factory.updateOne(Booking);
 module.exports = {
   getCheckoutSession,
   createBookingCheckout,
   getAllBookings,
   deleteBooking,
   getBooking,
+  updateBooking,
 };

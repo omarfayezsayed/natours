@@ -67,7 +67,7 @@ const handleJsonWebTokenErrors = () => {
   return new AppError("Invalid token, please log in agine", 401);
 };
 const globalErrorHandling = (err, req, res, next) => {
-  // console.error(err);
+  console.error(err);
   err.statusCode = err.statusCode || 500;
   err.status = err.status || "error";
   let error = { ...err };
